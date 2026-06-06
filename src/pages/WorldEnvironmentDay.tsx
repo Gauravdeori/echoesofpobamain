@@ -23,24 +23,24 @@ function useReveal() {
 
 /* ─── Gallery Data ─── */
 const galleryImages = [
-  { src: "/env-day/env-day-1.jpg", caption: "Community members teaming up to plant new tree saplings." },
-  { src: "/env-day/env-day-2.jpg", caption: "Volunteers enthusiastically sweeping and clearing garbage from public spaces." },
-  { src: "/env-day/env-day-3.jpg", caption: "Young environmentalists carefully planting and securing a young tree." },
-  { src: "/env-day/env-day-4.jpg", caption: "A local playground area, cleaned and ready for children to enjoy." },
-  { src: "/env-day/env-day-5.jpg", caption: "Our amazing group of volunteers posing behind the World Environment Day banner." },
-  { src: "/env-day/env-day-6.jpg", caption: "Working hand-in-hand to ensure our local environment stays green." },
-  { src: "/env-day/env-day-7.jpg", caption: "Collecting plastic waste and sorting it for proper disposal." },
-  { src: "/env-day/env-day-8.jpg", caption: "Another tree planted, another step towards a healthier ecosystem." },
-  { src: "/env-day/env-day-9.jpg", caption: "Dedicated individuals taking time off to care for Mother Nature." },
-  { src: "/env-day/env-day-10.jpg", caption: "Teamwork makes the dream work—especially when it comes to conservation!" },
-  { src: "/env-day/env-day-11.jpg", caption: "Showing immense dedication towards the cleanliness drive." },
-  { src: "/env-day/env-day-12.jpg", caption: "Every small action counts: picking up litter along the walkways." },
-  { src: "/env-day/env-day-13.jpg", caption: "A proud moment after successfully planting numerous saplings." },
-  { src: "/env-day/env-day-14.jpg", caption: "Ensuring the roots are firmly planted in the soil." },
-  { src: "/env-day/env-day-15.jpg", caption: "Smiles all around as the community comes together for a noble cause." },
-  { src: "/env-day/env-day-16.jpg", caption: "Leading by example: teaching the next generation about environmental care." },
-  { src: "/env-day/env-day-17.jpg", caption: "A cleaner, greener neighborhood thanks to our wonderful volunteers." },
-  { src: "/env-day/env-day-18.jpg", caption: "Thank you to everyone who participated in the Echoes of Poba drive!" }
+  { src: "/env-day/env-day-1.jpg", caption: "Community leaders and volunteers planting a sapling together during the World Environment Day 2026 drive." },
+  { src: "/env-day/env-day-2.jpg", caption: "Volunteers sweeping and cleaning streets, collecting plastic waste." },
+  { src: "/env-day/env-day-3.jpg", caption: "Students working together to plant a native tree sapling." },
+  { src: "/env-day/env-day-4.jpg", caption: "A local children's playground cleaned up and restored by our team." },
+  { src: "/env-day/env-day-5.jpg", caption: "A proud moment: Our large group of volunteers posing with their cleaning gear behind the event banner." },
+  { src: "/env-day/env-day-6.jpg", caption: "Volunteers preparing the soil and carefully placing the sapling." },
+  { src: "/env-day/env-day-7.jpg", caption: "Using tools to clear weeds and prepare the ground for plantation." },
+  { src: "/env-day/env-day-8.jpg", caption: "Dozens of bags filled with collected plastic waste and garbage, ready for disposal." },
+  { src: "/env-day/env-day-9.jpg", caption: "Eco-club members checking on a newly planted tree sapling." },
+  { src: "/env-day/env-day-10.jpg", caption: "A tree sapling secured with a green protective mesh to ensure its survival." },
+  { src: "/env-day/env-day-11.jpg", caption: "Young students actively participating and learning the process of tree plantation." },
+  { src: "/env-day/env-day-12.jpg", caption: "Carefully securing the roots of a sapling in its new home." },
+  { src: "/env-day/env-day-13.jpg", caption: "Playground area upgraded with protective guards installed around new saplings." },
+  { src: "/env-day/env-day-14.jpg", caption: "Working in pairs to plant saplings and revitalize our community spaces." },
+  { src: "/env-day/env-day-15.jpg", caption: "A volunteer ensuring the soil is firmly placed around the new tree." },
+  { src: "/env-day/env-day-16.jpg", caption: "A team of young volunteers ready to sweep and clear litter from public streets." },
+  { src: "/env-day/env-day-17.jpg", caption: "Clearing overgrown weeds and collecting hidden plastic waste in green patches." },
+  { src: "/env-day/env-day-18.jpg", caption: "Volunteers of all ages working side-by-side to strengthen Poba's ecosystem." }
 ];
 
 const WorldEnvironmentDay = () => {
@@ -106,7 +106,7 @@ const WorldEnvironmentDay = () => {
             {/* badge */}
             <div className="inline-flex items-center gap-2 bg-cream/10 backdrop-blur-sm border border-cream/20 rounded-full px-5 py-2 mb-8">
               <Globe className="w-4 h-4 text-gold-soft" />
-              <span className="text-sm font-medium text-cream/90">June 5, 2024</span>
+              <span className="text-sm font-medium text-cream/90">June 5, 2026</span>
               <span className="text-cream/40">•</span>
               <span className="text-sm font-medium text-gold-soft">Event Concluded</span>
             </div>

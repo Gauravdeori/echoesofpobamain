@@ -26,7 +26,7 @@ const EnvironmentDayBanner = () => {
           <div className="flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-gold-soft animate-pulse" />
             <span className="text-cream font-semibold text-sm sm:text-base">
-              🌍 World Environment Day 2024 was a huge success!
+              🌍 World Environment Day 2026 was a huge success!
             </span>
           </div>
           <Link
