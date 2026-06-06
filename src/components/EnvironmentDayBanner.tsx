@@ -26,14 +26,14 @@ const EnvironmentDayBanner = () => {
           <div className="flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-gold-soft animate-pulse" />
             <span className="text-cream font-semibold text-sm sm:text-base">
-              🌍 World Environment Day — June 5, 2026
+              🌍 World Environment Day 2024 was a huge success!
             </span>
           </div>
           <Link
             to="/#environment-day"
             className="inline-flex items-center gap-1.5 bg-cream/15 hover:bg-cream/25 backdrop-blur-sm border border-cream/20 rounded-full px-4 py-1.5 text-cream text-sm font-medium transition-all duration-300 hover:gap-2.5"
           >
-            Join the Cleanup
+            View Gallery
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
