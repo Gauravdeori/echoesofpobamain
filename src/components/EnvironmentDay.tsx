@@ -38,7 +38,15 @@ const galleryImages = [
   { src: "/env-day/env-day-15.jpg", caption: "A volunteer ensuring the soil is firmly placed around the new tree." },
   { src: "/env-day/env-day-16.jpg", caption: "A team of young volunteers ready to sweep and clear litter from public streets." },
   { src: "/env-day/env-day-17.jpg", caption: "Clearing overgrown weeds and collecting hidden plastic waste in green patches." },
-  { src: "/env-day/env-day-18.jpg", caption: "Volunteers of all ages working side-by-side to strengthen Poba's ecosystem." }
+  { src: "/env-day/env-day-18.jpg", caption: "Volunteers of all ages working side-by-side to strengthen Poba's ecosystem." },
+  { src: "/env-day/env-day-19.jpg", caption: "A young volunteer carefully planting a native sapling to help expand Poba's green canopy." },
+  { src: "/env-day/env-day-20.jpg", caption: "Volunteers teaming up to plant a sapling, showcasing the spirit of teamwork on World Environment Day." },
+  { src: "/env-day/env-day-21.jpg", caption: "Community members dedicating their time to nurture new trees and restore the local environment." },
+  { src: "/env-day/env-day-22.jpg", caption: "Hands-on participation from the youth, playing a vital role in our tree-planting initiatives." },
+  { src: "/env-day/env-day-23.jpg", caption: "A proud volunteer actively planting new life to restore the lush environment." },
+  { src: "/env-day/env-day-24.jpg", caption: "Working together to dig and prepare the soil for a successful sapling plantation." },
+  { src: "/env-day/env-day-25.jpg", caption: "Securing the sapling's roots to ensure a strong foundation for future growth." },
+  { src: "/env-day/env-day-26.jpg", caption: "A snapshot of the incredible teamwork and dedication shown by our environmental heroes." }
 ];
 
 const EnvironmentDay = () => {
