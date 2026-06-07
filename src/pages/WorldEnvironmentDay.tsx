@@ -40,7 +40,11 @@ const galleryImages = [
   { src: "/env-day/env-day-15.jpg", caption: "A volunteer ensuring the soil is firmly placed around the new tree." },
   { src: "/env-day/env-day-16.jpg", caption: "A team of young volunteers ready to sweep and clear litter from public streets." },
   { src: "/env-day/env-day-17.jpg", caption: "Clearing overgrown weeds and collecting hidden plastic waste in green patches." },
-  { src: "/env-day/env-day-18.jpg", caption: "Volunteers of all ages working side-by-side to strengthen Poba's ecosystem." }
+  { src: "/env-day/env-day-18.jpg", caption: "Volunteers of all ages working side-by-side to strengthen Poba's ecosystem." },
+  { src: "/env-day/env-day-19.jpg", caption: "A young volunteer carefully planting a native sapling to help expand Poba's green canopy." },
+  { src: "/env-day/env-day-20.jpg", caption: "Volunteers teaming up to plant a sapling, showcasing the spirit of teamwork on World Environment Day." },
+  { src: "/env-day/env-day-21.jpg", caption: "Community members dedicating their time to nurture new trees and restore the local environment." },
+  { src: "/env-day/env-day-22.jpg", caption: "Hands-on participation from the youth, playing a vital role in our tree-planting initiatives." }
 ];
 
 const WorldEnvironmentDay = () => {
