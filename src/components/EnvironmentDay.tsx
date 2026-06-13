@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Sparkles, Camera, ChevronDown, ChevronUp } from "lucide-react";
+import { Sparkles, Camera, ChevronDown, ChevronUp, X } from "lucide-react";
 
 /* ─── intersection-observer hook for scroll animations ─── */
 function useReveal() {
@@ -51,6 +51,7 @@ const galleryImages = [
 
 const EnvironmentDay = () => {
   const [showAll, setShowAll] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const sectionReveal = useReveal();
 
   const displayedImages = showAll ? galleryImages : galleryImages.slice(0, 6);
@@ -95,7 +96,8 @@ const EnvironmentDay = () => {
           {displayedImages.map((image, i) => (
             <div
               key={i}
-              className="group relative rounded-2xl overflow-hidden shadow-card hover:shadow-elevated transition-all duration-500 hover:-translate-y-1 bg-cream border border-border/50 flex flex-col"
+              className="group relative rounded-2xl overflow-hidden shadow-card hover:shadow-elevated transition-all duration-500 hover:-translate-y-1 bg-cream border border-border/50 flex flex-col cursor-pointer"
+              onClick={() => setSelectedImage(image.src)}
             >
               <div className="aspect-[4/3] relative overflow-hidden bg-muted">
                 <img
@@ -104,7 +106,11 @@ const EnvironmentDay = () => {
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-brown-deep/15 md:bg-brown-deep/0 md:group-hover:bg-brown-deep/40 transition-colors duration-300 flex items-center justify-center">
+                  <div className="bg-cream/90 text-brown-deep rounded-full p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-md">
+                    <Camera className="w-5 h-5" />
+                  </div>
+                </div>
               </div>
               <div className="p-5 flex-grow flex items-center">
                 <p className="text-sm text-muted-foreground font-medium text-center w-full">
@@ -129,6 +135,28 @@ const EnvironmentDay = () => {
           </Button>
         </div>
       </div>
+
+      {/* Lightbox */}
+      {selectedImage && (
+        <div
+          className="fixed inset-0 z-50 bg-brown-deep/95 flex items-center justify-center p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          <button
+            className="absolute top-4 right-4 text-cream hover:text-gold-soft transition-colors"
+            onClick={() => setSelectedImage(null)}
+            aria-label="Close lightbox"
+          >
+            <X className="w-8 h-8" />
+          </button>
+          <img
+            src={selectedImage}
+            alt="Environment Day Lightbox"
+            className="max-w-full max-h-[90vh] rounded-lg shadow-elevated"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </section>
   );
 };
