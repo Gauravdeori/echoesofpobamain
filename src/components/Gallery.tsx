@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { X } from "lucide-react";
+import { useGallery } from "@/hooks/useFirestoreGallery";
 import heroForest from "@/assets/hero-forest.jpg";
 import cleanupDrive1 from "@/assets/cleanup-drive-1.jpg";
 import cleanupDrive2 from "@/assets/cleanup-drive-2.jpg";
@@ -28,6 +29,12 @@ const galleryImages = [
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const { data: dbImages } = useGallery();
+
+  const allImages = [
+    ...(dbImages || []).map((img) => ({ src: img.src, alt: img.alt, category: img.category })),
+    ...galleryImages,
+  ];
 
   return (
     <section className="section-padding bg-cream">
@@ -45,7 +52,7 @@ const Gallery = () => {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-          {galleryImages.map((image, index) => (
+          {allImages.map((image, index) => (
             <div
               key={index}
               className="group relative overflow-hidden rounded-xl cursor-pointer aspect-square"

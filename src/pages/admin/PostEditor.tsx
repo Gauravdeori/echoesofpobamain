@@ -244,10 +244,11 @@ const PostEditor: React.FC = () => {
         });
       }
       navigate("/admin/posts");
-    } catch {
+    } catch (error: any) {
+      console.error("Failed to save post:", error);
       toast({
         title: "Error",
-        description: "Failed to save post.",
+        description: error?.message || "Failed to save post.",
         variant: "destructive",
       });
     } finally {
