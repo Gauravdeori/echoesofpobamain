@@ -136,21 +136,21 @@ const EventsPage: React.FC = () => {
       return;
     }
     try {
-      toast({ title: "Compressing image…", description: "Optimizing for upload." });
-      const compressed = await compressImage(file);
-      
-      const uploadPath = `events/images/${Date.now()}_${compressed.name.replace(/\s+/g, "_")}`;
-      const url = await uploadFile(compressed, uploadPath);
-      setFeaturedImage(url);
-      toast({ title: "Image uploaded", description: "Event image set successfully." });
+      toast({ title: "Processing image…", description: "Compressing locally." });
+      const compressed = await compressImage(file, 800, 0.6);
+      const reader = new FileReader();
+      reader.readAsDataURL(compressed);
+      reader.onloadend = () => {
+        const base64data = reader.result as string;
+        setFeaturedImage(base64data);
+        toast({ title: "Success", description: "Image compressed and set." });
+      };
     } catch (error: any) {
       toast({
-        title: "Upload failed",
-        description: error?.message || "Failed to upload image.",
+        title: "Error",
+        description: "Failed to process image.",
         variant: "destructive",
       });
-    } finally {
-      resetUploadState();
     }
   };
 

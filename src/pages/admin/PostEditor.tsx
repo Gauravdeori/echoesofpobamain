@@ -139,19 +139,22 @@ const PostEditor: React.FC = () => {
       return;
     }
     try {
-      toast({ title: "Compressing image…", description: "Optimizing for upload." });
-      const compressed = await compressImage(file);
-      const url = await uploadFile(compressed);
-      setFeaturedImage(url);
-      toast({ title: "Image uploaded", description: "Featured image set." });
-    } catch {
+      toast({ title: "Processing image…", description: "Compressing locally." });
+      const compressed = await compressImage(file, 800, 0.6);
+      const reader = new FileReader();
+      reader.readAsDataURL(compressed);
+      reader.onloadend = () => {
+        const base64data = reader.result as string;
+        setFeaturedImage(base64data);
+        toast({ title: "Success", description: "Image compressed and set." });
+      };
+    } catch (error: any) {
       toast({
-        title: "Upload failed",
-        description: "Failed to upload image.",
+        title: "Error",
+        description: "Failed to process image.",
         variant: "destructive",
       });
     }
-    resetUploadState();
   };
 
   const removeImage = () => {

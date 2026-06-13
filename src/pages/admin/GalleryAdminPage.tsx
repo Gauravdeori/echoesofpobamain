@@ -94,6 +94,15 @@ const GalleryAdminPage: React.FC = () => {
     });
   };
 
+  const fileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -125,10 +134,9 @@ const GalleryAdminPage: React.FC = () => {
       let url = newImageSrc.trim();
 
       if (newImageFile) {
-        toast({ title: "Compressing image…", description: "Optimizing for upload." });
-        const compressed = await compressImage(newImageFile);
-        const uploadPath = `gallery/images/${Date.now()}_${compressed.name.replace(/\s+/g, "_")}`;
-        url = await uploadFile(compressed, uploadPath);
+        toast({ title: "Processing image…", description: "Compressing locally." });
+        const compressed = await compressImage(newImageFile, 800, 0.6);
+        url = await fileToBase64(compressed);
       }
 
       // Determine order (append to end)
