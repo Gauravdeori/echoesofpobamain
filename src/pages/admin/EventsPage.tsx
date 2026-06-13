@@ -410,6 +410,15 @@ const EventsPage: React.FC = () => {
                   className="hidden"
                   disabled={isSaving || isUploading}
                 />
+                <div className="mt-2">
+                  <input
+                    type="url"
+                    placeholder="Or paste a direct image URL (e.g. https://example.com/image.jpg)…"
+                    value={featuredImage}
+                    onChange={(e) => setFeaturedImage(e.target.value)}
+                    className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-2.5 text-xs text-white placeholder-white/20 outline-none transition-all focus:border-emerald-500/40 focus:ring-1 focus:ring-emerald-500/20"
+                  />
+                </div>
               </div>
             </div>
           </div>

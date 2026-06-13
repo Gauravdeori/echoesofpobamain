@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import LatestUpdateBanner from "@/components/LatestUpdateBanner";
 import WhatWeDo from "@/components/WhatWeDo";
 import EnvironmentDay from "@/components/EnvironmentDay";
 import OurImpact from "@/components/OurImpact";
@@ -11,6 +12,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <LatestUpdateBanner />
       <main>
         <div id="environment-day">
           <EnvironmentDay />

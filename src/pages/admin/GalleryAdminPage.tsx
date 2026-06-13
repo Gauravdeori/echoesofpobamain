@@ -45,6 +45,7 @@ const GalleryAdminPage: React.FC = () => {
   // New Item states
   const [newImageFile, setNewImageFile] = useState<File | null>(null);
   const [newImagePreview, setNewImagePreview] = useState<string>("");
+  const [newImageSrc, setNewImageSrc] = useState("");
   const [newAltText, setNewAltText] = useState("");
   const [newCategory, setNewCategory] = useState<GalleryCategory>("Nature");
   const [isSaving, setIsSaving] = useState(false);
@@ -110,10 +111,10 @@ const GalleryAdminPage: React.FC = () => {
 
   const handleCreateItem = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newImageFile) {
+    if (!newImageFile && !newImageSrc.trim()) {
       toast({
-        title: "Image required",
-        description: "Please select an image to upload.",
+        title: "Image source required",
+        description: "Please upload an image or paste a direct image URL.",
         variant: "destructive",
       });
       return;
@@ -121,11 +122,14 @@ const GalleryAdminPage: React.FC = () => {
 
     setIsSaving(true);
     try {
-      toast({ title: "Compressing image…", description: "Optimizing for upload." });
-      const compressed = await compressImage(newImageFile);
-      
-      const uploadPath = `gallery/images/${Date.now()}_${compressed.name.replace(/\s+/g, "_")}`;
-      const url = await uploadFile(compressed, uploadPath);
+      let url = newImageSrc.trim();
+
+      if (newImageFile) {
+        toast({ title: "Compressing image…", description: "Optimizing for upload." });
+        const compressed = await compressImage(newImageFile);
+        const uploadPath = `gallery/images/${Date.now()}_${compressed.name.replace(/\s+/g, "_")}`;
+        url = await uploadFile(compressed, uploadPath);
+      }
 
       // Determine order (append to end)
       const currentCount = galleryItems?.length || 0;
@@ -140,12 +144,13 @@ const GalleryAdminPage: React.FC = () => {
       await createMutation.mutateAsync(itemData);
       toast({
         title: "Image added",
-        description: "Image uploaded and added to the gallery.",
+        description: "Image added to the gallery successfully.",
       });
 
       // Reset Form
       setNewImageFile(null);
       setNewImagePreview("");
+      setNewImageSrc("");
       setNewAltText("");
       setNewCategory("Nature");
       setShowAddForm(false);
@@ -288,6 +293,7 @@ const GalleryAdminPage: React.FC = () => {
                     onClick={() => {
                       setNewImageFile(null);
                       setNewImagePreview("");
+                      setNewImageSrc("");
                     }}
                     className="absolute right-2 top-2 rounded-lg bg-black/60 p-1.5 text-white/70 backdrop-blur transition-colors hover:bg-black/80 hover:text-white"
                   >
@@ -329,6 +335,18 @@ const GalleryAdminPage: React.FC = () => {
                 className="hidden"
                 disabled={isSaving || isUploading}
               />
+              <div className="mt-2">
+                <input
+                  type="url"
+                  placeholder="Or paste a direct image URL (https://…)"
+                  value={newImageSrc}
+                  onChange={(e) => {
+                    setNewImageSrc(e.target.value);
+                    setNewImagePreview(e.target.value);
+                  }}
+                  className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-xs text-white placeholder-white/20 outline-none transition-all focus:border-emerald-500/40"
+                />
+              </div>
             </div>
 
             {/* Inputs */}
