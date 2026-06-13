@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -11,23 +11,39 @@ import GalleryPage from "./pages/GalleryPage";
 import VolunteerPage from "./pages/VolunteerPage";
 import NotFound from "./pages/NotFound";
 
-// Admin imports
-import { AuthProvider } from "@/integrations/firebase/AuthContext";
-import AdminGuard from "@/components/admin/AdminGuard";
-import AdminLayout from "@/components/admin/AdminLayout";
-import AdminLogin from "@/pages/admin/AdminLogin";
-import AdminDashboard from "@/pages/admin/AdminDashboard";
-import PostsPage from "@/pages/admin/PostsPage";
-import PostEditor from "@/pages/admin/PostEditor";
-import EventsPage from "@/pages/admin/EventsPage";
-import GalleryAdminPage from "@/pages/admin/GalleryAdminPage";
-import VolunteersAdminPage from "@/pages/admin/VolunteersAdminPage";
-import DonationsPage from "@/pages/admin/DonationsPage";
-import TeamMembersPage from "@/pages/admin/TeamMembersPage";
-import MessagesPage from "@/pages/admin/MessagesPage";
-import SettingsPage from "@/pages/admin/SettingsPage";
+// Lazy-load all admin modules so Firebase is only loaded when visiting /admin
+const AdminLogin = lazy(() => import("@/pages/admin/AdminLogin"));
+const AdminDashboard = lazy(() => import("@/pages/admin/AdminDashboard"));
+const PostsPage = lazy(() => import("@/pages/admin/PostsPage"));
+const PostEditor = lazy(() => import("@/pages/admin/PostEditor"));
+const EventsPage = lazy(() => import("@/pages/admin/EventsPage"));
+const GalleryAdminPage = lazy(() => import("@/pages/admin/GalleryAdminPage"));
+const VolunteersAdminPage = lazy(() => import("@/pages/admin/VolunteersAdminPage"));
+const DonationsPage = lazy(() => import("@/pages/admin/DonationsPage"));
+const TeamMembersPage = lazy(() => import("@/pages/admin/TeamMembersPage"));
+const MessagesPage = lazy(() => import("@/pages/admin/MessagesPage"));
+const SettingsPage = lazy(() => import("@/pages/admin/SettingsPage"));
+
+// These are small and needed for the admin shell, also lazy-loaded
+const AdminGuard = lazy(() => import("@/components/admin/AdminGuard"));
+const AdminLayout = lazy(() => import("@/components/admin/AdminLayout"));
+const AuthProviderWrapper = lazy(() =>
+  import("@/integrations/firebase/AuthContext").then((mod) => ({
+    default: mod.AuthProvider,
+  }))
+);
 
 const queryClient = new QueryClient();
+
+// Loading fallback for admin routes
+const AdminLoader = () => (
+  <div className="flex h-screen w-full items-center justify-center bg-[#0a0f0d]">
+    <div className="flex flex-col items-center gap-3">
+      <div className="h-8 w-8 animate-spin rounded-full border-2 border-emerald-500/20 border-t-emerald-400" />
+      <p className="text-sm text-emerald-300/40 font-sans">Loading…</p>
+    </div>
+  </div>
+);
 
 // Scroll helper to reset view or scroll to hash elements smoothly on path changes
 const ScrollToHash = () => {
@@ -69,19 +85,23 @@ const App = () => (
           <Route
             path="/admin"
             element={
-              <AuthProvider>
-                <AdminLogin />
-              </AuthProvider>
+              <Suspense fallback={<AdminLoader />}>
+                <AuthProviderWrapper>
+                  <AdminLogin />
+                </AuthProviderWrapper>
+              </Suspense>
             }
           />
           <Route
             path="/admin/*"
             element={
-              <AuthProvider>
-                <AdminGuard>
-                  <AdminLayout />
-                </AdminGuard>
-              </AuthProvider>
+              <Suspense fallback={<AdminLoader />}>
+                <AuthProviderWrapper>
+                  <AdminGuard>
+                    <AdminLayout />
+                  </AdminGuard>
+                </AuthProviderWrapper>
+              </Suspense>
             }
           >
             <Route path="dashboard" element={<AdminDashboard />} />
