@@ -80,6 +80,45 @@ const PostEditor: React.FC = () => {
     }
   }, [existingPost]);
 
+  // Compress image before upload using Canvas API
+  const compressImage = (file: File, maxWidth = 1200, quality = 0.8): Promise<File> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        img.onload = () => {
+          let { width, height } = img;
+          if (width > maxWidth) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          }
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          if (!ctx) { resolve(file); return; }
+          ctx.drawImage(img, 0, 0, width, height);
+          canvas.toBlob(
+            (blob) => {
+              if (!blob) { resolve(file); return; }
+              const compressed = new File([blob], file.name.replace(/\.\w+$/, ".webp"), {
+                type: "image/webp",
+                lastModified: Date.now(),
+              });
+              resolve(compressed);
+            },
+            "image/webp",
+            quality
+          );
+        };
+        img.onerror = () => resolve(file);
+        img.src = e.target?.result as string;
+      };
+      reader.onerror = () => reject(reader.error);
+      reader.readAsDataURL(file);
+    });
+  };
+
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -91,16 +130,18 @@ const PostEditor: React.FC = () => {
       });
       return;
     }
-    if (file.size > 5 * 1024 * 1024) {
+    if (file.size > 10 * 1024 * 1024) {
       toast({
         title: "File too large",
-        description: "Maximum file size is 5 MB.",
+        description: "Maximum file size is 10 MB.",
         variant: "destructive",
       });
       return;
     }
     try {
-      const url = await uploadFile(file);
+      toast({ title: "Compressing image…", description: "Optimizing for upload." });
+      const compressed = await compressImage(file);
+      const url = await uploadFile(compressed);
       setFeaturedImage(url);
       toast({ title: "Image uploaded", description: "Featured image set." });
     } catch {
