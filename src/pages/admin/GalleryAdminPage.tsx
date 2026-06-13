@@ -345,7 +345,7 @@ const GalleryAdminPage: React.FC = () => {
               />
               <div className="mt-2">
                 <input
-                  type="url"
+                  type="text"
                   placeholder="Or paste a direct image URL (https://…)"
                   value={newImageSrc}
                   onChange={(e) => {

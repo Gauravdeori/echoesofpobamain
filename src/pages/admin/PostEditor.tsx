@@ -390,7 +390,7 @@ const PostEditor: React.FC = () => {
             />
             <div className="mt-2">
               <input
-                type="url"
+                type="text"
                 placeholder="Or paste a direct image URL (e.g. https://example.com/image.jpg)…"
                 value={featuredImage}
                 onChange={(e) => setFeaturedImage(e.target.value)}

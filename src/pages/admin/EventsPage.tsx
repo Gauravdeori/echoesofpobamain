@@ -66,10 +66,15 @@ const EventsPage: React.FC = () => {
         setFeaturedImage(item.featuredImage || "");
         setStatus(item.status);
         
-        // Parse date and time
+        // Parse date and time safely
         const d = new Date(item.date);
-        setDate(d.toISOString().split("T")[0]);
-        setTime(d.toTimeString().slice(0, 5));
+        if (!isNaN(d.getTime())) {
+          setDate(d.toISOString().split("T")[0]);
+          setTime(d.toTimeString().slice(0, 5));
+        } else {
+          setDate("");
+          setTime("");
+        }
         
         setShowForm(true);
       }
@@ -167,6 +172,16 @@ const EventsPage: React.FC = () => {
 
     setIsSaving(true);
     const eventDate = new Date(`${date}T${time}`);
+    if (isNaN(eventDate.getTime())) {
+      toast({
+        title: "Invalid date/time",
+        description: "Please enter a valid date and time.",
+        variant: "destructive",
+      });
+      setIsSaving(false);
+      return;
+    }
+
     const eventInput: EventItemInput = {
       title: title.trim(),
       description: description.trim(),
@@ -412,7 +427,7 @@ const EventsPage: React.FC = () => {
                 />
                 <div className="mt-2">
                   <input
-                    type="url"
+                    type="text"
                     placeholder="Or paste a direct image URL (e.g. https://example.com/image.jpg)…"
                     value={featuredImage}
                     onChange={(e) => setFeaturedImage(e.target.value)}
