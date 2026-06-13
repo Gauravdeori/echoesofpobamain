@@ -3,6 +3,7 @@ import WhatWeDo from "@/components/WhatWeDo";
 import EnvironmentDay from "@/components/EnvironmentDay";
 import OurImpact from "@/components/OurImpact";
 import StoriesFromTheWild from "@/components/StoriesFromTheWild";
+import UpdatesAndNews from "@/components/UpdatesAndNews";
 import CallToActionBanner from "@/components/CallToActionBanner";
 import Contact from "@/components/Contact";
 
@@ -17,6 +18,7 @@ const Index = () => {
         <WhatWeDo />
         <OurImpact />
         <StoriesFromTheWild />
+        <UpdatesAndNews />
         <CallToActionBanner />
         <Contact />
       </main>

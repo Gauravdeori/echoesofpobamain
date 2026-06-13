@@ -122,7 +122,10 @@ export function useCreatePost() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: createPost,
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["admin-posts"] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["admin-posts"] });
+      qc.invalidateQueries({ queryKey: ["published-posts"] });
+    },
   });
 }
 
@@ -131,7 +134,10 @@ export function useUpdatePost() {
   return useMutation({
     mutationFn: ({ id, data }: { id: string; data: Partial<PostInput> }) =>
       updatePost(id, data),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["admin-posts"] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["admin-posts"] });
+      qc.invalidateQueries({ queryKey: ["published-posts"] });
+    },
   });
 }
 
@@ -139,6 +145,25 @@ export function useDeletePost() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: deletePostById,
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["admin-posts"] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["admin-posts"] });
+      qc.invalidateQueries({ queryKey: ["published-posts"] });
+    },
+  });
+}
+
+async function fetchPublishedPosts(): Promise<Post[]> {
+  const q = query(collection(db, COLLECTION), orderBy("createdAt", "desc"));
+  const snapshot = await getDocs(q);
+  const allPosts = snapshot.docs.map((d) => docToPost(d.id, d.data()));
+  // Safe in-memory filter to prevent composite index errors
+  return allPosts.filter((post) => post.status === "published");
+}
+
+export function usePublishedPosts() {
+  return useQuery({
+    queryKey: ["published-posts"],
+    queryFn: fetchPublishedPosts,
+    staleTime: 30_000,
   });
 }

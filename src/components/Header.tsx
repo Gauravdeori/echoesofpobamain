@@ -10,6 +10,7 @@ const navLinks = [
   { to: "/about#values", label: "Values" },
   { to: "/our-work", label: "Our Work" },
   { to: "/#environment-day", label: "Events" },
+  { to: "/#updates", label: "Updates" },
   { to: "/gallery", label: "Gallery" },
   { to: "#contact", label: "Contact" },
 ];
